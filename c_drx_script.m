@@ -133,7 +133,7 @@ function [energy_gain, delays] = c_drx_script(T_total, longDRX_cycle, inactivity
                         end
 
                         % Update system state
-                        E_DRX = E_DRX + 100 * actual_processing_time;
+                        E_DRX = E_DRX + 300 * actual_processing_time;
                         remaining_time = remaining_time - actual_processing_time;
                         total_packets_received = total_packets_received + packets_processed;
                         on_time_counter = on_time_counter + actual_processing_time;
@@ -161,7 +161,7 @@ function [energy_gain, delays] = c_drx_script(T_total, longDRX_cycle, inactivity
                         end
                         
                         % Update system state
-                        E_DRX = E_DRX + 100 * time_to_process;
+                        E_DRX = E_DRX + 100 * (time_to_process - total_processing_time) + 300 * total_processing_time;
                         remaining_time = remaining_time - time_to_process;
                         total_packets_received = total_packets_received + num_packets;
                         on_time_counter = on_time_counter + time_to_process;
@@ -204,7 +204,7 @@ function [energy_gain, delays] = c_drx_script(T_total, longDRX_cycle, inactivity
                         current_state = 'inactivity_timer';
                     end
 
-                    E_DRX = E_DRX + 100 * time_to_process;
+                    E_DRX = E_DRX + 100 * (time_to_process - packet_reception_time) + 300 * packet_reception_time;
                     fprintf('-> Receiving packets: %d ms (Energy: %.1f mJ)\n', time_to_process, 100*time_to_process);
     
                     remaining_time = remaining_time - time_to_process;
